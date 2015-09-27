@@ -6,6 +6,11 @@ import java.io.*;
 public abstract class Stemmer implements Serializable {
 
   /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8827904598626981182L;
+
+/**
    * Iterated stemming of the given word.
    */
   public abstract String stem(String str);

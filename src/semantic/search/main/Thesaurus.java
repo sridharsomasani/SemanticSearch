@@ -38,7 +38,9 @@ class Thesaurus {
         	  synonyms.add(tokens.nextToken());
           }
         } 
-      } else System.out.println("HTTP error:"+rc); 
+      } else {
+    	  System.out.println("HTTP error:"+rc); 
+      } 
       connection.disconnect();
       
     } catch (java.net.MalformedURLException e) { 

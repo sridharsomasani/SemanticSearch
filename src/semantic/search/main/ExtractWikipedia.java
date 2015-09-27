@@ -3,8 +3,6 @@ package semantic.search.main;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URL;
-import java.net.URLEncoder;
-
 import org.jsoup.Jsoup;
 
 public class ExtractWikipedia {
