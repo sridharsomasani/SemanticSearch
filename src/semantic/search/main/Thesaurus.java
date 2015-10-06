@@ -4,6 +4,7 @@ import java.net.HttpURLConnection;
 import java.net.URL; 
 import java.net.URLEncoder; 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.StringTokenizer;
 
 import org.json.simple.*; // json package, download at http://code.google.com/p/json-simple/ 
@@ -14,8 +15,8 @@ class Thesaurus {
   private final String key = "QNsf0gOgUuMlu1LhosP7";
   private String language = "en_US";
 
-  public ArrayList<String> getSynonyms(String word) {
-	ArrayList<String> synonyms = new ArrayList<String>();
+  public HashSet<String> getSynonyms(String word) {
+	HashSet<String> synonyms = new HashSet<String>();
     try { 
       URL serverAddress = new URL(endpoint + "?word="+URLEncoder.encode(word, "UTF-8")+"&language="+language+"&key="+key+"&output=json"); 
       System.out.println(serverAddress.toExternalForm());
@@ -35,7 +36,7 @@ class Thesaurus {
           System.out.println(list.get("category")+":"+list.get("synonyms"));
           StringTokenizer tokens = new StringTokenizer((String)list.get("synonyms"), "|");
           while(tokens.hasMoreTokens()){
-        	  synonyms.add(tokens.nextToken());
+        	  synonyms.add(tokens.nextToken().toLowerCase());
           }
         } 
       } else {

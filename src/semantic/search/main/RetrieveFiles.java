@@ -3,6 +3,7 @@ package semantic.search.main;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -12,7 +13,7 @@ public class RetrieveFiles {
 	private InvertedIndex invertedIndex;
 	private Thesaurus thesaurus;
 	private ExtractWikipedia wiki;
-	private ExtractKeyPhases wikiKeyPhrases;
+	private ExtractKeyPhrases wikiKeyPhrases;
 	
 	public RetrieveFiles(){
 		invertedIndex = new InvertedIndex();
@@ -22,7 +23,7 @@ public class RetrieveFiles {
 	}
 	
 	public void buildIndex(String inputDir){
-		invertedIndex.buildInvertedIndex(inputDir, "data/stopwords/stopwords_en.txt");
+		invertedIndex.buildInvertedIndex(inputDir, Constants.stopwordsPath_en);
 	}
 	
 	public HashSet<String> searchKey(String key){
@@ -31,7 +32,7 @@ public class RetrieveFiles {
 		HashSet<String> fileList = invertedIndex.searchInvertedIndex(key);
 		HashSet<String> list;
 		//temp = System.nanoTime() - lStartTime;
-		ArrayList<String> synonyms = thesaurus.getSynonyms(key);
+		HashSet<String> synonyms = thesaurus.getSynonyms(key);
 		if(fileList ==null){
 			fileList = new HashSet<String>();
 		}
@@ -44,7 +45,7 @@ public class RetrieveFiles {
 			
 		}
 		//temp = temp + System.nanoTime() - lStartTime;
-		ArrayList<String> wikiKeys = extractKeysFromWiki(key);
+		HashSet<String> wikiKeys = extractKeysFromWiki(key);
 		//lStartTime = System.nanoTime();
 		if(wikiKeys != null){
 			for(String wikiKey: wikiKeys){
@@ -61,36 +62,37 @@ public class RetrieveFiles {
 		return fileList;
 	}
 	
-	public ArrayList<String> extractKeysFromWiki(String key){
-		wikiKeyPhrases = new ExtractKeyPhases();
-		int status = wiki.getWikiContent(key);
+	public HashSet<String> extractKeysFromWiki(String key){
+		wikiKeyPhrases = new ExtractKeyPhrases();
+		int status = 0;
+		try {
+			status = wiki.searchWiki(key);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		if(status > 0){
 			try {
-				File file = new File("data/tmp/wiki.key");
-				if(file.exists()){ 
-					file.delete();
-				}
-				wikiKeyPhrases.extractKeyPhases(Constants.mauiKeyOptions);
-				file = new File("data/tmp/wiki.key");
-				if(file.exists()){
-					ArrayList<String> keys = new ArrayList<String>();
-					String currentLine;
-					BufferedReader br = new BufferedReader(new FileReader("data/tmp/wiki.key"));
-					while((currentLine = br.readLine()) != null){
-						keys.add(currentLine);
-						System.out.println(currentLine);
-						//StringTokenizer tokens = new StringTokenizer(currentLine);
-//						while(tokens.hasMoreTokens()){
-//							keys.add(tokens.nextToken().trim());
-//						}
+				wikiKeyPhrases.extractKeyPhrases(Constants.getTopicExtrOption(Constants.wikiLocale));
+				File file = null;
+				File folder = new File(Constants.wikiLocale);
+				File [] files = folder.listFiles();
+				HashSet<String> keys = new HashSet<String>();
+				String currentLine;
+				BufferedReader br;
+				for(int i=0; i<files.length; i++){
+					file = files[i];
+					if(!file.isDirectory() && !file.getName().endsWith(".txt")){
+						br = new BufferedReader(new FileReader(file));
+						while((currentLine = br.readLine()) != null){
+							keys.add(currentLine.trim().toLowerCase());
+//							System.out.println(currentLine + " --> " + file.getName());
+						}
+						br.close();
 					}
-					br.close();
-					return keys;
-				}else {
-					return null;
 				}
+				return keys;
 			} catch (Exception e) {
-				
 				e.printStackTrace();
 			}
 		}

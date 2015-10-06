@@ -38,16 +38,15 @@ public class InvertedIndex {
 					br = new BufferedReader(new FileReader(folderPath + "/" + file));
 					fileName = file.substring(0, file.length()-4);
 					while((currentLine = br.readLine()) != null){
-						if(file.endsWith(".key")){
-							if(postingList.containsKey(currentLine)){
-								tmp_list = postingList.get(currentLine);
-								tmp_list.add(fileName);
-								postingList.put(currentLine, tmp_list);
-							}else{
-								tmp_list = new LinkedHashSet<String>();
-								tmp_list.add(fileName);
-								postingList.put(currentLine, tmp_list);
-							}
+						currentLine = currentLine.toLowerCase();
+						if(postingList.containsKey(currentLine)){
+							tmp_list = postingList.get(currentLine);
+							tmp_list.add(fileName);
+							postingList.put(currentLine, tmp_list);
+						}else{
+							tmp_list = new LinkedHashSet<String>();
+							tmp_list.add(fileName);
+							postingList.put(currentLine, tmp_list);
 						}
 					}
 				}

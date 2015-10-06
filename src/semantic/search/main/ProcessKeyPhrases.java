@@ -5,7 +5,7 @@ import java.util.Arrays;
 public class ProcessKeyPhrases {
 
 	public static void main(String[] args) {
-		ExtractKeyPhases buildAndExtract = new ExtractKeyPhases();
+		ExtractKeyPhrases buildAndExtract = new ExtractKeyPhrases();
 		System.out.println(args);
 		
 		
@@ -17,7 +17,7 @@ public class ProcessKeyPhrases {
 			if(task.equals("-model")){
 				buildAndExtract.buildModel(options);
 			}else if(task.equals("-extract")){
-				buildAndExtract.extractKeyPhases(options);
+				buildAndExtract.extractKeyPhrases(options);
 			}else {
 				System.err.println("Invalid Options");
 			}
