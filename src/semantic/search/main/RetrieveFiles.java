@@ -96,6 +96,7 @@ public class RetrieveFiles {
 				e.printStackTrace();
 			}
 		}
+		System.out.println("No Articles Found In Wikipedia For: " + key);
 		return null;
 	}
 }

@@ -30,7 +30,7 @@ public class SemanticSearch {
 		Scanner scan;
 		while(true){
 			System.out.println("Enter '-quit' To Exit");
-			System.out.println("Enter Phrases to Seach:");
+			System.out.println("Enter Phrases to Seach:\n");
 			scan = new Scanner(System.in);
 			String key = scan.nextLine();
 			if(key.equals("-quit")){

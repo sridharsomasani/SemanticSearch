@@ -36,9 +36,6 @@ public class ExtractKeyPhrases {
 		this.opts = _opts;
 		if(opts != null){
 			//buildModel();
-			for(String opt: opts){
-				System.out.println(opt);
-			}
 			extractTopics.topicExtractor(opts);
 			//System.out.println(extractTopics.getOptions());
 		}else {
