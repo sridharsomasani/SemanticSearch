@@ -2,13 +2,22 @@ package semantic.search.main;
 
 import java.util.Arrays;
 
+/**
+ * The <i>ProcessKeyPhrases</i> class used to test key phrase extraction with command line
+ * arguments <br>
+ * Usage: ProcessKeyPhrases taskSwitch taskOptions<br>
+ * Options: -model taskOption : Build Model <br>
+ * Options: -extract taskOption : Extract KeyPhrases"<br>
+ * 
+ * <b> Just for testing <b>
+ * @author Sridhar Somasani
+ *
+ */
 public class ProcessKeyPhrases {
 
 	public static void main(String[] args) {
 		ExtractKeyPhrases buildAndExtract = new ExtractKeyPhrases();
 		System.out.println(args);
-		
-		
 		
 		if(args.length > 2){
 			String task = args[1];

@@ -1,5 +1,10 @@
 package semantic.search.utilities;
 
+/**
+ * The <i>Constants</i> class is used to store various constants of the application
+ * @author Sridhar Somasani
+ *
+ */
 public class Constants {
 	
 	    // -l option for input folder
@@ -10,21 +15,41 @@ public class Constants {
 		
 		
 		
+		/**
+		 * temporary directory used by the application
+		 */
 		public static String tempLocale = "data/temp/";
 		
+		/**
+		 * folder to store wikipedia articles
+		 */
 		public static String wikiLocale = "data/wiki/";
 		
+		/**
+		 * english stop words file path
+		 */
 		public static String stopwordsPath_en = "data/stopwords/stopwords_en.txt";
 		
+		/**
+		 * @param path = input directory
+		 * @return returns Maui 1.2 options with input directory
+		 */
 		public static String[] getTopicExtrOption(String path) {
 			String [] mauiKeyOptions = {
-				"-l", "path", "-m", "keyPhaseExtractModel", "-t", "PorterStemmer", "-v", "none", "-n", "5"
+				"-l", "path", "-m", "keyPhaseExtractModel", "-t", "PorterStemmer", "-v", "none", "-n", "10", "-a"
 			};
-//			String [] options = mauiKeyOptions;
 			mauiKeyOptions[1] = path;
 			return mauiKeyOptions;
 		}
 		
+		/**
+		 * Minimum document score to include in inverted index
+		 */
+		public static double minDocumentScore = 0.0;
+		
+		/**
+		 * prints the command line options and usage
+		 */
 		public static void commandLineUsage(){
 			System.err.println("Invalid Command Line Arguments");
 			System.err.println("Usage: <text_docs_base> <file_type>");

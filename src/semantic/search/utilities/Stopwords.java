@@ -9,6 +9,11 @@ import java.util.HashSet;
 
 
 
+/**
+ * The <i>Stopwords</i> class is used to load English stop words
+ * @author Sridhar Somasani
+ *
+ */
 public class Stopwords implements Serializable {
 
 	private static final long serialVersionUID = 1L;

@@ -10,12 +10,34 @@ import java.util.StringTokenizer;
 import org.json.simple.*; // json package, download at http://code.google.com/p/json-simple/ 
 
 
+/**
+ * The <i>Thesaurus</i> class is used to extract synonyms of a word 
+ * from {@linkplain <a href=http://thesaurus.altervista.org> http://thesaurus.altervista.org </a>} 
+ * online dictionary using web service.
+ * <pre>
+ * {
+    "response": [{
+        "list": {
+            "category": "(noun)",
+            "synonyms": "hullo|hi|howdy|how-do-you-do|greeting|salutation"
+        }
+    }]
+}
+ * </pre>
+ * @author Sridhar Somasani
+ *
+ */
 class Thesaurus { 
   final String endpoint = "http://thesaurus.altervista.org/thesaurus/v1"; 
   private final String key = "QNsf0gOgUuMlu1LhosP7";
   private String language = "en_US";
 
-  public HashSet<String> getSynonyms(String word) {
+ /**
+ * Parse JSON containing synonyms
+ * @param word = root word to obtain synonyms
+ * @return HashSet<String> with synonyms
+ */
+public HashSet<String> getSynonyms(String word) {
 	HashSet<String> synonyms = new HashSet<String>();
     try { 
       URL serverAddress = new URL(endpoint + "?word="+URLEncoder.encode(word, "UTF-8")+"&language="+language+"&key="+key+"&output=json"); 
